@@ -1,0 +1,315 @@
+swagger: "2.0"
+info:
+  title: Restaurant API
+  description: This is  a Restaurant api
+  version: 1.0
+  contact:
+    email: toka.fawy@gmail.com
+  servers:
+    -url: http://localhost:5000
+    description: THis is my local Server
+    -url: http://restaurant.com/
+    description: This is my original URL
+schemes: [https,http]
+securityDefinitions: {
+    JWT: {
+      type: 'apiKey',
+      description: 'JWT authorization of an API',
+      name: 'Authorization',
+      in: 'headers',
+    },
+  }
+
+
+
+#Return cities From get request
+paths:
+  # /string:
+  #   get:
+  #     summary: Returns a cities.
+  #     description: all the city 
+  #     responses:
+  #       200:    # status code
+  #         description: Successul Response
+  #         schema: 
+  #           type: string
+  #           example:"name" : "Ismailia"
+  #       400:
+  #         description: User Error
+  #         schema: 
+  #           type: string
+  #           example: "Some Error "
+
+#Returns a City
+ /cities:
+    get:
+      summary: Returns a list of cities.
+      description: all city in app
+      responses:
+        200:    # status code
+          description: Successul Response
+          schema: 
+            type: array
+            items: 
+              type: object
+              properties:
+                id:
+                  type: object
+                name:
+                  type: string
+
+#Post json/body & Body required
+  # /createcity:
+  #   post:
+  #     summary: Adds a new city
+  #     produces:
+  #       - application/json
+  #     consumes:
+  #       - application/json
+  #     parameters:
+  #       - in: body
+  #         name: body
+  #         schema:
+  #           type: object
+  #           required:
+  #             - name
+  #             properties:
+  #             name:
+  #               type: string
+  #     responses:
+  #       '200':
+  #         description: OK
+
+
+#Defining Body Reference
+ /createcity:
+    post:
+      summary: Adds a new city
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+             required:
+               - name
+               properties:
+               name:
+                 type: string
+      responses:
+        '200':
+          description: OK
+
+ /restaurants:
+    get:
+      summary: Returns a list of cities.
+      description: all city in app
+      responses:
+        200:    # status code
+          description: Successul Response
+          schema: 
+            type: array
+            items: 
+              type: object
+              properties:
+                id:
+                  type: object
+                name:
+                  type: string
+ /createrestaurant:
+    post:
+      summary: Adds a new restaurant
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+             required:
+               - name
+               -email
+               -location
+               -city
+               properties:
+               name:
+                 type: string
+               email:
+                 type: string
+               city:
+                 type: object
+               location:
+                 type: {
+                   type:String,
+                   default:'Point'
+                   enum:['Point']
+                 }
+      responses:
+        '200':
+          description: OK
+
+ /restaurant/search/{name}:
+    get:
+      summary: Returns a restaurant by Name.
+      description: Returns the Specific restaurant
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type : string
+      responses: 
+        '200':
+          description: OK
+          schema:
+            type: object
+            example: {name: Roster}
+      
+ /restaurant/groupByCity:
+    get:
+      summary: Returns a list of cities.
+      description: all city in app
+      responses:
+        200:    # status code
+          description: Successul Response
+          schema: 
+            type: array
+            items: 
+              type: object
+              properties:
+                id:
+                  type: object
+                name:
+                  type: string
+
+ /restaurants/distances/{latlng}:
+    get:
+      summary: Returns a restaurant by Name.
+      description: Returns the Specific restaurant
+      parameters:
+        - name: latlng
+          in: path
+          required: true
+          schema:
+            type : string
+      responses: 
+        '200':
+          description: OK
+          schema:
+            type: object
+            example: {name: Roster}
+
+ /restaurants/update/{id}:
+    put:
+      summary: Adds a new restaurant
+      produces:
+      - application/json
+      - application/json
+      parameters:
+        - name: id
+          in: path
+          description: Updated rest object
+          required: true
+           schema:
+            type : string
+        - name: body
+          in: body
+          description: "Updated user object"
+          required: true
+           schema:
+            type: object
+             required:
+               - name
+               -email
+               -location
+               -city
+               properties:
+               name:
+                 type: string
+               email:
+                 type: string
+               city:
+                 type: object
+               location:
+                 type: {
+                   type:String,
+                   default:'Point'
+                   enum:['Point']
+                 }
+      responses:
+        '200':
+          description: OK 
+
+ /login:
+    post:
+      summary: login
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+             required:
+               -email
+               -password
+               properties:
+               email:
+                 type: string
+               passsword:
+                 type: string
+      responses:
+        '200':
+          description: OK
+
+ /signup:
+    post:
+      summary: signup
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+             required:
+               -name
+               -email
+               -password
+               properties:
+               name:
+                 type: string
+               email:
+                 type: string
+               password:
+                 type: string
+      responses:
+        '200':
+          description: OK
+
+
+ /restaurant/delete/{id}:
+    delete:
+      summary: Returns a restaurant by Name.
+      description: Returns the Specific restaurant
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type : string
+      responses: 
+        '200':
+          description: OK
+          schema:
+            type: object
+            example: {name: Roster}
