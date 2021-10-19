@@ -24,7 +24,7 @@ if(process.env.NODE_ENV=='development'){
     });
 
     
-    const port=5000;
+    const port=process.env.PORT;
 app.listen (port,()=>{
 console.log(`connection successfully on port ${port}`);
 });
