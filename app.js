@@ -5,7 +5,7 @@ const morgan= require('morgan');
 app.use(morgan('dev'));
 const user=require('./Models/userModel');
 const AppError = require('./utils/appError');
-const globalErrorHandler = require('./controllers/errorController');
+const globalErrorHandler = require('./Controllers/errorController');
 const cityController=require('./Controllers/cityController');
 const restaurantController=require('./Controllers/restaurantcontroller');
 const userController=require('./Controllers/userController');
